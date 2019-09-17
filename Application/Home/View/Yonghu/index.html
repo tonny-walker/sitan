@@ -1,0 +1,29 @@
+<extend name="Index/index" />
+
+<block name="main">
+<div class=" banner-buying">
+	<div class=" container">
+		<h3><span>欢迎您成为斯坦一员</span></h3> 
+		<div class="clearfix"> </div>
+	</div>
+</div>
+
+<div class="login-right">
+	<div class="container">
+		<h3>注册·斯坦</h3>
+		<div class="login-top">
+			<div class="form-info">
+				<form action="<{:U('Yonghu/doadd')}>" method="post">
+					<input type="text"   placeholder="请填写您的真实姓名" required  name="nickname">
+					<input type="text"   placeholder="请填写您的手机号码" required name="tel">
+					<input type="password"  placeholder="请为账号设置一个密码" required name="pwd">
+					<input type="password"  placeholder="请您确认密码" required name="repwd">
+					<input type="hidden"  value="<?php echo time()?>" required name="regtime">
+					<button class="btn-info btn-lg">您准备好了吗？<span class="btn-default btn-lg">出发</span></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</block>

@@ -1,0 +1,69 @@
+<extend name="Index/index" />
+
+<block name="main">
+<div class=" banner-buying">
+	<div class=" container">
+		<div class="clearfix"> </div>
+	</div>
+</div>
+<div class="login-right">
+	<div class="container">
+		<h3>欢迎登录-斯坦</h3>
+		<div class="login-top">
+			<div class="form-info">
+				<form action="<{:U('Public/dologin')}>" method="post">
+					<input type="text" id= "test" class="text" placeholder="请输入您注册时的手机号码" required name="username" >
+					<span id="notice"></span>
+					<input type="password"  id="pwd_test" placeholder="请您输入密码" required name="password" >
+					<span id="pwd_notice"></span>
+					<label class="hvr-sweep-to-right">
+			           	<input type="submit" value="登陆">
+			        </label>
+				</form>
+			</div>
+			<script>
+				// $('#test').blur(function(){
+				// 	var username = $(this).val();
+				// 	// alert(username);
+				// 	$.ajax({
+				// 		url:"<{:U('Yonghu/doajax')}>",
+				// 		type:'post',
+				// 		data:'username=' + username,
+				// 		success:function(data){
+				// 			console.log(data);
+				// 			$('#notice').text(data);
+				// 			// alert(data);
+				// 		}
+				// 	})
+				// })
+			</script>
+			
+			<script>
+				$('#pwd_test').blur(function(){
+					var ps = {
+						username : $('#test').val(),
+					    password : $(this).val(),
+					};
+					
+					$.ajax({
+						url:"<{:U('Yonghu/doajax')}>",
+						type:'post',
+						data:ps,
+
+						success:function(data){
+							console.log(data);
+							// $('#pwd_notice').text(data['username']);
+							// alert(data);
+						}
+					})
+				})
+			</script>
+			<div class="create">
+				<a class="hvr-sweep-to-right" href="<{:U('Yonghu/index')}>">注册</a>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</block>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>斯坦·短租 || 您身边的短租房</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="keywords" content="斯坦·短租,短租房,日租房,短租公寓,民宿,酒店式公寓,家庭旅店" />
+<meta name="description" content="斯坦·短租,全家出游新选择!提供高品质短租房、日租房、房源覆盖国内外各大旅游城市的商圈,主打一居、二居、三居房,是全家出游、结伴旅游、聚会办party的不二之选!" />
+<link rel="shortcut icon" href="__PUBLIC__/img/public/log.ico">
+<link href="__PUBLIC__/Home/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="__PUBLIC__/Home/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+<!--menu-->
+<script src="__PUBLIC__/Home/js/scripts.js"></script>
+<link href="__PUBLIC__/Home/css/styles.css" rel="stylesheet">
+<!--//menu-->
+<!--theme-style-->
+<link href="__PUBLIC__/Home/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!--//theme-style-->
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- slide -->
+<script src="__PUBLIC__/Home/js/responsiveslides.min.js"></script>
+    <script>
+	    $(function () {
+	        $("#slider").responsiveSlides({
+		        auto: true,
+		        speed: 500,
+		        namespace: "callbacks",
+		        pager: true,
+	        });
+	    });
+    </script>
+</head>
+
+<body >
+<!-- ******************Top***************************** -->
+	<div class="navigation">
+		<div class="container-fluid">
+			<nav class="pull">
+				<ul>
+					<li><a href="<{:U('Index/index')}>">主页</a></li>
+					<li><a href="#">关于我们</a></li>
+					<li><a href="#">博客</a></li>
+					<li><a href="#">条款</a></li>
+					<li><a href="#">隐私</a></li>
+					<li><a href="#">联系</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+<!-- ***************END Top**************************** -->
+<!--****************************header*********************************-->
+<div class="header">
+	<div class="container">
+		<!--***********logo*********-->
+			<div class="logo">
+				<h1><a href="<{:U('Index/index')}>">斯坦·短租</a></h1>
+			</div>
+		<!--***********END logo******-->
+		<div class="top-nav">
+			<ul class="right-icons">
+				<if condition="($_SESSION['user']  eq  0 )  "> 
+					<li>
+						<a href="<{:U('Public/login')}>">
+							<i class="glyphicon glyphicon-user"></i> 登录 
+						</a>
+					</li>
+				<else />
+					<li>
+						<a href="<{:U('Personal/index')}>">
+							<i class="glyphicon glyphicon-user"></i><?php echo($_SESSION['user']['nickname'])?>
+						</a>
+					</li>
+					<li>
+						<a href="<{:U('Public/logout')}>">
+							<span ><i class="glyphicon glyphicon-off"> 退出 </i></span>
+						</a>
+					</li>
+				</if>
+			</ul>
+			<div class="nav-icon">
+				<div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
+					<a href="#">
+						<i class="glyphicon glyphicon-menu-hamburger"></i>
+					</a>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+</div>
+<block name="main">
+	<div class=" header-right">
+		<div class=" banner">
+			<div class="slider">
+			    <div class="callbacks_container">
+				    <ul class="rslides" id="slider">
+				        <volist name="images" id="v">
+							<li>
+					          	<div class="banner1" style="background-image: url(__PUBLIC__/Uploads/<{$v.image}>)">
+					           		<div class="caption">
+							        	<h3>去旅行,去生活</h3>
+							        	<p>哪怕只住一晚</p>
+					          		</div>
+					          	</div>
+					        </li>
+				        </volist>
+				    </ul>
+			    </div>
+			</div>
+		</div>
+	</div>
+<!--******************END header**************************************-->
+<div class="container">
+	<!--搜素框-->
+	<form action="<{:U('Search/search')}>" method="post">
+		<div class="price">
+			<div class="price-grid">
+				<div class="col-sm-3 price-top">
+					<h4>省份</h4>
+					<select class="pro in-drop" name="province">
+					</select>
+				</div>
+				<div class="col-sm-3 price-top">
+					<h4>城市</h4>
+					<select class="city in-drop" name="city">
+					</select>
+				</div>
+				<div class="col-sm-4 price-top">
+					<h4>房间</h4>
+					<select class="in-drop" name="bed">
+						<option value="1">1 居</option>
+						<option value="2">2 居</option>
+						<option value="3">3 居</option>
+					</select>
+				</div>
+				<div class="col-sm-2 price-top">
+					<h4>执行操作</h4>
+					<input type="submit" class="hvr-sweep-to-right"  value="立即搜索">
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</form>
+	<!-- END 搜素框 -->
+	<script>
+		//获取省份信息
+		$.ajax({
+	        type:'get',
+	        url:"<{:U('Search/address')}>",
+	        success:function(data){
+	            //先清空原先的数据
+	            //遍历省份数据
+	            console.log('');
+	            for (var i = 0; i < data.length; i++) {
+	                $('<option value="'+data[i].id+'">'+data[i].name+'</option>').appendTo('.pro');
+	            }
+	        },
+	        dataType:'json',
+	        async:false,//同步!!!!!!
+		})
+
+	    //绑定事件
+	    $('.pro').change(function(){
+	        //获取当前的vale值
+	        var pid = $(this).val();
+	        // 一触发change事件,就清空后面所有的数据
+	        $('.city').show().empty();
+	        // 保留$(this)变量
+	        var _this = $(this);
+	        // 请求下一级数据
+	        $.ajax({
+	            type:'get',
+	            url: "<{:U('Search/address')}>",
+	            data:"pid="+pid,
+	            success:function(data){
+	                // 如果下一级没数据,就隐藏后面的下拉框
+	                if (!data) {
+	                    _this.nextAll('select').hide();
+	                    return;
+	                };
+	                // console.log(data);
+	                // console.log($(this).constructor);
+	                // 填充下一级的数据
+	                // console.log(data);
+	                for (var i = 0; i < data.length; i++) {
+	                	// console.log(_this.next('select'));
+	                    $('<option value="'+data[i].id+'">'+data[i].name+'</option>').appendTo($('.city'));
+	                }
+	                //自动触发后面的select的change事件
+	                _this.next('select').trigger('change');
+	            },
+	            dataType:'json',
+	    	})
+		})
+
+	    //自动加载省份的change事件
+	    $('.pro').trigger('change');
+	</script>
+	<div class="top-grid">
+		<h3>热门城市</h3>
+		<div class="grid-at">
+			<div class="col-md-3 grid-city">
+				<div class="grid-lo">
+					<a href="<{:U('Search/type',array('id'=>$cimage['0']['cid']))}>">
+						<figure class="effect-layla">
+							<img class=" img-responsive" src="__PUBLIC__/Uploads/<{$cimage['0'][image]}>" alt="img06">
+							<figcaption>
+								<h4><{$cimage['0']['city']}></h4>
+							</figcaption>
+						</figure>
+					</a>
+				</div>
+			</div>
+
+			<div class="col-md-3 grid-city">
+				<div class="grid-lo">
+					<a href="<{:U('Search/type',array('id'=>$cimage['1']['cid']))}>">
+						<figure class="effect-layla">
+							<img class=" img-responsive" src="__PUBLIC__/Uploads/<{$cimage['1'][image]}>" alt="img06">
+							<figcaption>
+								<h4><{$cimage['1']['city']}></h4>
+							</figcaption>
+						</figure>
+					</a>
+				</div>
+			</div>
+
+			<div class="col-md-6 grid-city grid-city1">
+				<div class="grid-me">
+					<div class="col-md-8 grid-lo1">
+						<div class=" grid-lo">
+							<a href="<{:U('Search/type',array('id'=>$cimage['2']['cid']))}>">
+								<figure class="effect-layla">
+									<img class=" img-responsive" src="__PUBLIC__/Uploads/<{$cimage['2'][image]}>" alt="img06">
+									<figcaption>
+										<h4 class="effect1"><{$cimage['2']['city']}></h4>
+									</figcaption>
+								</figure>
+							</a>
+					 	</div>
+					</div>
+
+					<div class="col-md-4 grid-lo2">
+					 	<div class=" grid-lo">
+					 		<a href="<{:U('Search/type',array('id'=>$cimage['3']['cid']))}>">
+								<figure class="effect-layla">
+									<img class=" img-responsive" src="__PUBLIC__/Uploads/<{$cimage['3'][image]}>" alt="img06">
+									<figcaption>
+										<h4 class="effect2"><{$cimage['3']['city']}></h4>
+									</figcaption>
+								</figure>
+							</a>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+
+				<div class="grid-me">
+					<div class="col-md-6 grid-lo3">
+						<div class=" grid-lo">
+							<a href="<{:U('Search/type',array('id'=>$cimage['4']['cid']))}>">
+								<figure class="effect-layla">
+									<img class="img-responsive" src="__PUBLIC__/Uploads/<{$cimage['4'][image]}>" alt="img06">
+									<figcaption>
+										<h4 class="effect3"><{$cimage['4']['city']}></h4>
+									</figcaption>
+								</figure>
+							</a>
+						</div>
+					</div>
+
+					<div class="col-md-6 grid-lo4">
+					 	<div class=" grid-lo">
+					 		<a href="<{:U('Search/type',array('id'=>$cimage['5']['cid']))}>">
+								<figure class="effect-layla">
+									<img class="img-responsive" src="__PUBLIC__/Uploads/<{$cimage['5'][image]}>" alt="img06">
+									<figcaption>
+										<h4 class="effect3"><{$cimage['5']['city']}></h4>
+									</figcaption>
+								</figure>
+							</a>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!-- 滚动图 -->
+<div class="container">
+	<div class="future">
+		<h3>热门·经典·推荐</h3>
+			<div class="content-bottom-in">
+				<ul id="flexiselDemo1">
+					<li>
+						<div class="project-fur">
+							<a href="<{:U('Display/index',array('id'=>1))}>">
+								<img class="img-responsive" src="__PUBLIC__/Home/images/pi.jpg" />
+								<div class="fur">
+									<div class="fur1">
+	                                    <span class="fur-money">$399 - $999 /晚 </span>
+	                                    <h6 class="fur-name"><a>三生三世桃花坞</a></h6>
+	                                   	<span>拉斯维加斯</span>
+                           			</div>
+		                            <div class="fur2">
+		                               	<span>仅剩21天</span>
+		                             </div>
+								</div>
+							</a>
+						</div>
+					</li>
+
+					<li>
+						<div class="project-fur">
+							<a href="<{:U('Display/index',array('id'=>2))}>">
+								<img class="img-responsive" src="__PUBLIC__/Home/images/pi1.jpg" alt="" />
+								<div class="fur">
+									<div class="fur1">
+	                                    <span class="fur-money">￥3999 - ￥9999 /晚 </span>
+	                                    <h6 class="fur-name"><a>浪漫香榭丽舍</a></h6>
+	                                    <span>香格里拉</span>
+                           			</div>
+		                            <div class="fur2">
+		                               	<span>仅剩12天</span>
+		                            </div>
+								</div>
+							</a>
+						</div>
+					</li>
+
+					<li>
+						<div class="project-fur">
+							<a href="<{:U('Display/index',array('id'=>3))}>" >
+								<img class="img-responsive" src="__PUBLIC__/Home/images/pi2.jpg" alt="" />
+								<div class="fur">
+									<div class="fur1">
+	                                    <span class="fur-money">$93 - 406 /晚 </span>
+	                                    <h6 class="fur-name"><a href="#">薰衣草之醉</a></h6>
+	                                   	<span>普罗旺斯</span>
+                           			</div>
+		                            <div class="fur2">
+		                               	<span>随·缘</span>
+		                             </div>
+								</div>
+							</a>
+						</div>
+					</li>
+
+					<li>
+						<div class="project-fur">
+							<a href="<{:U('Display/index',array('id'=>4))}>" >
+								<img class="img-responsive" src="__PUBLIC__/Home/images/pi3.jpg" alt="" />
+								<div class="fur">
+									<div class="fur1">
+	                                    <span class="fur-money">￥3999元 - ￥9999 /晚 </span>
+	                                    <h6 class="fur-name"><a>独具异域风情</a></h6>
+	                                   	<span>冰岛</span>
+                           			</div>
+		                            <div class="fur2">
+		                               	<span>仅剩22天</span>
+		                            </div>
+								</div>
+							</a>
+						</div>
+					</li>
+				</ul>
+			<script type="text/javascript">
+				$(window).load(function() {
+					$("#flexiselDemo1").flexisel({
+						visibleItems: 4,
+						animationSpeed: 1000,
+						autoPlay: true,
+						autoPlaySpeed: 3000,
+						pauseOnHover: true,
+						enableResponsiveBreakpoints: true,
+				    	responsiveBreakpoints: { 
+				    		portrait: { 
+				    			changePoint:480,
+				    			visibleItems: 1
+				    		}, 
+				    		landscape: { 
+				    			changePoint:640,
+				    			visibleItems: 2
+				    		},
+				    		tablet: { 
+				    			changePoint:768,
+				    			visibleItems: 3
+				    		}
+				    	}
+				    });
+				});
+			</script>
+			<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.flexisel.js"></script>
+			<script>
+				window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","weixin","renren","tqq","tqf","douban","thx","fbook","twi","linkedin"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+				with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+			</script>
+		</div>
+	</div>
+</div>
+
+</block>
+
+<!--******************************************footer*******************************************************-->
+<div class="footer">
+	<div class="container">
+		<div class="footer-top-at">
+			<div class="col-md-3 amet-sed">
+				<h4>联系我</h4>
+				<ul class="nav-bottom">
+					<li><a href="#">客服服务</a></li>
+					<li><a href="#">820-820-88448</a></li>
+					<li><a href="#">010-60004300532-100 / 010-89177777</a></li>
+					<li><a href="#">Email: 146378573@qq.com</a></li>
+					<li><a href="#">商务合作</a></li>
+					<li><a href="#">QQ：1461378573</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-3 amet-sed ">
+				<h4>发现</h4>
+				<ul class="nav-bottom">
+					<li><a href="#">旅行基金</a></li>
+					<li><a href="#">旅行指南</a></li>
+					<li><a href="#">房源审核规范</a></li>
+					<li><a href="#">房东经营行为管理规范</a></li>
+					<li><a href="#">房客安心大作战</a></li>
+					<li><a href="#">优质住宿计划</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-3 amet-sed">
+				<h4>友情链接</h4>
+				<p>177-869-6559</p>
+				<ul class="nav-bottom">
+					<volist name="Blogroll" id="var" empty="虚位以待">
+					<li><a href="<{$var['italic']}>" target="_blank"><{$var['name']}></a></li>
+					</volist>
+				</ul>
+			</div>
+
+			<div class="col-md-3 amet-sed ">
+				<h4>斯坦·短租</h4>
+				   <ul class="nav-bottom">
+						<li><a href="#">关于</a></li>
+						<li><a href="#">工作机会</a></li>
+						<li><a href="#">服务协议</a></li>
+						<li><a href="#">隐私条款</a></li>
+					</ul>	
+					<ul class="social">
+						<li><a href="#"><i> </i></a></li>
+						<li><a href="#"><i class="gmail"> </i></a></li>
+						<li><a href="#"><i class="twitter"> </i></a></li>
+						<li><a href="#"><i class="camera"> </i></a></li>
+						<li><a href="#"><i class="dribble"> </i></a></li>
+					</ul>
+			</div>
+		<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="col-md-4 footer-logo">
+				<h2><a href="<{:U('Index/index')}>">斯坦·短租</a></h2>
+			</div>
+			<div class="col-md-8 footer-class">
+				<p >Copyright &copy; 2015.Company name All rights reserved.</p>
+			</div>
+		<div class="clearfix"> </div>
+	 	</div>
+	</div>
+</div>
+<!--***************************************END footer************************************************-->
+</body>
+</html>

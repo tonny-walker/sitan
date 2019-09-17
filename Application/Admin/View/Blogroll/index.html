@@ -1,0 +1,57 @@
+<extend name="Layout/index" />
+
+<block name="breadcrumb-01">
+    <li>
+        <i class="icon-home home-icon"></i>
+        <a href="#">首页</a>
+    </li>
+    <li class="active">友情链接管理</li>
+</block>
+
+<block name="breadcrumb-02">
+    <h1>
+        友情链接管理
+        <small>
+            <i class="icon-double-angle-right"></i>
+            友情链接列表
+        </small>
+    </h1>
+</block>    
+<block name="main">
+    <div class=".table-responsive">
+        <table class="table table-bordered table-hover">
+            <tr class="active">
+                <th style='vertical-align: middle;text-align: center;'>序号</th>
+                <th style='vertical-align: middle;text-align: center;'>网站名称</th>
+                <th style='vertical-align: middle;text-align: center;'>URL地址</th>
+                <th style='vertical-align: middle;text-align: center;'>网站描述</th>
+                <th style='vertical-align: middle;text-align: center;'>联系人</th>
+                <th style='vertical-align: middle;text-align: center;'>站长Email</th>
+                <th style='vertical-align: middle;text-align: center;'>状态</th>
+                <th style='vertical-align: middle;text-align: center;'>操作</th>
+            </tr>
+            <volist name="list" id="vo">
+            <tr class="success">
+                <td style='vertical-align: middle;text-align: center;'><{$vo['id']}></td>
+                <td style='vertical-align: middle;text-align: center;'><{$vo['name']}></td>
+                <td style='vertical-align: middle;text-align: center;'><{$vo['italic']}></td>
+                <td style='vertical-align: middle;text-align: center;'><{$vo['desc']}></td>
+                <td style='vertical-align: middle;text-align: center;'><{$vo['contacts']}></td>
+                <td style='vertical-align: middle;text-align: center;'><{$vo['email']}></td>
+                <td style='vertical-align: middle;text-align: center;'>
+                    <if condition="$vo['status'] eq '0'">禁用
+                    <else />启动
+                    </if>
+                </td>
+                <td style='vertical-align: middle;text-align: center;'>
+                    <a href="<{:U('delete', array('id'=>$vo['id']))}>" class="btn btn-warning">删除</a>
+                    <a href="<{:U('edit', array('id'=>$vo['id']))}>" class="btn btn-success">修改</a>
+                </td>
+            </tr>
+            </volist>
+        </table> <!--END table-->
+    </div> <!--END responsive-->
+    <!-- 分页显示 -->
+    <{$page}>                      
+
+</block>
